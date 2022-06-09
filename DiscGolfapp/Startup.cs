@@ -5,10 +5,9 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Pomelo.EntityFrameworkCore.MySql;
-using System.Data;
-using MySql.Data.MySqlClient;
 using DiscGolfapp.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace DiscGolfapp
 {
@@ -26,10 +25,13 @@ namespace DiscGolfapp
         {
 
             //DbContext configuration
-            services.AddDbContext<DgDbContext>();
             
+            services.AddDbContext<DgDbContext>(options => options.UseMySql(Configuration.GetConnectionString("Defaultconnection")));
+            services.AddSingleton<IDictionary<string, UserConnection>>(opts => new Dictionary<string, UserConnection>());
+
 
             services.AddControllersWithViews();
+            services.AddRazorPages();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
