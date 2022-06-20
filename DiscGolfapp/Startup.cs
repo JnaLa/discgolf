@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DiscGolfapp.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using DiscGolfapp.Models;
 
 namespace DiscGolfapp
 {
@@ -25,10 +25,12 @@ namespace DiscGolfapp
         {
 
             //DbContext configuration
-            
-            services.AddDbContext<DgDbContext>(options => options.UseMySql(Configuration.GetConnectionString("Defaultconnection")));
-            services.AddSingleton<IDictionary<string, UserConnection>>(opts => new Dictionary<string, UserConnection>());
 
+            /*services.AddDbContext<DgDbContext>(options => options.UseMySql(Configuration.GetConnectionString("Defaultconnection")));
+            services.AddSingleton<IDictionary<string, UserConnection>>(opts => new Dictionary<string, UserConnection>());
+            */
+
+            services.AddDbContext<DiscgolfDBContext>(options => options.UseMySql(Configuration.GetConnectionString("Defaultconnection")));
 
             services.AddControllersWithViews();
             services.AddRazorPages();
